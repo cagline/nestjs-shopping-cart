@@ -1,24 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { Employees, EmployeeTire } from "./employees.entity";
-import uuid from 'uuid';
+import { CreateEmployeeDto } from "./dto/create-employee.dto";
+import { Employee } from "src/employees/schemas/employee.schema";
+import { EmployeeRepository } from "./employee.repository";
+
 
 
 
 @Injectable()
 export class EmployeesService {
-    private employees: Employees[] = [];
+    constructor(private employeeRepository: EmployeeRepository) {
 
-    findAll(){
-        return this.employees;
     }
 
-    create(firstName: string, lastName: string, designation: string, tier: EmployeeTire){
-         const emp = {
-             id: uuid(),
-             firstName,
-             lastName,
-             designation,
-             tier
-         }
+    findAll():Promise<Employee[]>{
+        return this.employeeRepository.findAll();
     }
+
+    create(employeeCrateDto: CreateEmployeeDto): Promise<Employee>{
+         return this.employeeRepository.create(employeeCrateDto);
+
+    }
+
+    // search(employeeSearchDto: SearchEmployeeDto){
+    //     const {name, status} = employeeSearchDto;
+    //     let employees = this.findAll();
+    //     if(status){
+    //         employees = employees.filter((e)=>e.status = status )
+    //     }
+    //     if(name){
+    //         employees = employees.filter((e=>e.firstName.includes(name)|| e.lastName.includes(name)))
+    //     }
+    //     console.info(employees)
+    //     return employees;
+    // }
+
+    findOne(id:string):Promise<Employee>{
+        return this.employeeRepository.findOne(id);
+    }
+
+    // update(employeeUpdateDto:UpdateEmployeeDto): Employee{
+    //     const {id, lastName } = employeeUpdateDto;
+    //     let emp = this.findOne(id);
+    //     console.log('emp'+ JSON.stringify(emp))
+    //     emp.lastName = lastName;
+    //     return emp;
+    // }
+
 }
