@@ -17,11 +17,6 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get('ratings')
-  findAllWithRatings() {
-    return this.usersService.findAllWithRatings();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);

@@ -30,15 +30,12 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  async findAllWithRatings() {
-    return this.userRepository.find({
-      relations: ['ratings'], // Include related ratings
-    });
-  }
 
   findOne(id: number): Promise<User | null> {
-    console.log('findOne', id)
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.findOne({
+      where: { id },
+      relations: ['ratings'], // Include related ratings
+    });
   }
 
   async findOneByUsername(username: string): Promise<User | undefined> {
