@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { UserStatus } from "../user.enum";
 import { Order } from "../../orders/entities/order.entity";
+import { Rating } from "../../ratings/entities/rating.entity";
 
 @Entity()
 export class User {
@@ -25,4 +26,8 @@ export class User {
 
 	@OneToMany(() => Order, order => order.user)
 	orders: Order[];
+
+
+	@OneToMany(() => Rating, (productRating) => productRating.user)
+	ratings: Rating[];
 }
