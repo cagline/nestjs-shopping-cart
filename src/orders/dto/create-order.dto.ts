@@ -6,4 +6,5 @@ export class CreateOrderDto {
 	deliveryData: any;
 	createdAt: Date;
 	updatedAt: Date;
+	userId: number;
 }

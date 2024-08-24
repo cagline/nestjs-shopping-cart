@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { OrderStatus } from "../order.enum";
+import { User } from "../../users/entities/user.entity";
 
 @Entity()
 export class Order{
@@ -21,4 +22,6 @@ export class Order{
 	@UpdateDateColumn()
 	updatedAt: Date;
 
+	@ManyToOne(() => User, user => user.orders)
+	user: User;
 }

@@ -22,6 +22,6 @@ import { Order } from "./orders/entities/order.entity";
       synchronize: true,
     }),
 
-    UsersModule, AuthModule, OrdersModule, RatingsModule],
+    UsersModule, OrdersModule],
 })
 export class AppModule {}
