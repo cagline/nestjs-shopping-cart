@@ -8,9 +8,11 @@ import { ProductsModule } from './products/products.module';
 import { RatingsModule } from './ratings/ratings.module';
 import { Product } from "./products/entities/product.entity";
 import { Rating } from "./ratings/entities/rating.entity";
+import { AuthModule } from "./auth/auth.module";
+import { AppController } from "./app.controller";
 
 @Module({
-  controllers: [],
+  controllers: [AppController],
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -22,7 +24,6 @@ import { Rating } from "./ratings/entities/rating.entity";
       entities: [User,Order, Product, Rating],
       synchronize: true,
     }),
-
-    UsersModule, OrdersModule, ProductsModule, RatingsModule],
+    AuthModule, UsersModule, OrdersModule, ProductsModule, RatingsModule],
 })
 export class AppModule {}
