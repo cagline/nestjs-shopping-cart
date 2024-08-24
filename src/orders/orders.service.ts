@@ -5,21 +5,31 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { QueryFailedError, Repository } from "typeorm";
 import { Order } from "./entities/order.entity";
 import { OrderStatus } from "./order.enum";
-import { User } from "../users/entities/user.entity";
+import { UsersService } from '../users/users.service'; // Import UserService
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
+    private readonly userService: UsersService, // Inject UserService
+
 
   ) {}
 
   async create(createOrderDto: CreateOrderDto) {
 
-    createOrderDto.status = OrderStatus.PENDING;
+    const user = await this.userService.findOne(createOrderDto.userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
 
-    const order = this.orderRepository.create(createOrderDto);
+    const order = this.orderRepository.create({
+      status: createOrderDto.status || OrderStatus.PENDING,
+      orderData: createOrderDto.orderData,
+      deliveryData: createOrderDto.deliveryData,
+      user: user,
+    });
 
     return await this.orderRepository.save(order).catch((error) => {
       console.log(error.message)

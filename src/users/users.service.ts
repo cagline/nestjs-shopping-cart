@@ -31,6 +31,7 @@ export class UsersService {
   }
 
   findOne(id: number): Promise<User | null> {
+    console.log('findOne', id)
     return this.userRepository.findOneBy({ id });
   }
 
