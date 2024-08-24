@@ -34,7 +34,7 @@ export class UsersService {
   findOne(id: number): Promise<User | null> {
     return this.userRepository.findOne({
       where: { id },
-      relations: ['ratings'], // Include related ratings
+      relations: ['ratings','ratings.product'], // Include related ratings
     });
   }
 
