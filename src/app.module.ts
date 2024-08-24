@@ -1,13 +1,27 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
-import { EmployeesModule } from './employees/employees.module';
-import { MongooseModule } from "@nestjs/mongoose";
-import { VehiclesModule } from './vehicles/vehicles.module';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from "./app.controller";
-const MONOGO_CONNECTION= "mongodb+srv://cagline:7CLn7FWNMLHh1pe8@shoping-cart-example.pnohirb.mongodb.net/?retryWrites=true&w=majority&appName=shoping-cart-example";
+import { OrdersModule } from './orders/orders.module';
+import { RatingsModule } from './ratings/ratings.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from "./users/entities/user.entity";
+import { Order } from "./orders/entities/order.entity";
+
 @Module({
   controllers: [AppController],
-  imports: [UsersModule, EmployeesModule, MongooseModule.forRoot(MONOGO_CONNECTION), VehiclesModule, AuthModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'Sho@cart',
+      database: 'shoppingcart',
+      entities: [User,Order],
+      synchronize: true,
+    }),
+
+    UsersModule, AuthModule, OrdersModule, RatingsModule],
 })
 export class AppModule {}
