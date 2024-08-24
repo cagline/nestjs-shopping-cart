@@ -10,5 +10,7 @@ export class CreateUserDto {
 	username: string;
 	@IsNotEmpty()
 	password: string;
+	@IsNotEmpty()
+	salt: string;
 	status:UserStatus
 }
