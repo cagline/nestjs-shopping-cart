@@ -1,4 +1,5 @@
 import { OrderStatus } from "../order.enum";
+import { User } from "../../users/entities/user.entity";
 
 export class CreateOrderDto {
 	status: OrderStatus;
@@ -7,4 +8,5 @@ export class CreateOrderDto {
 	createdAt: Date;
 	updatedAt: Date;
 	userId: number;
+	user: User;
 }
