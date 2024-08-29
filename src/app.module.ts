@@ -10,19 +10,25 @@ import { Product } from "./products/entities/product.entity";
 import { Rating } from "./ratings/entities/rating.entity";
 import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   controllers: [AppController],
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'Sho@cart',
-      database: 'shoppingcart',
-      entities: [User,Order, Product, Rating],
-      synchronize: true,
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get("DATABASE_HOST"),
+        port: configService.get("DATABASE_PORT"),
+        username: configService.get("DATABASE_USER"),
+        password: configService.get("DATABASE_PASS"),
+        database: configService.get("DATABASE_NAME"),
+        entities: [User,Order, Product, Rating],
+        synchronize: true,
+      }),
+      inject:[ConfigService]
     }),
     AuthModule, UsersModule, OrdersModule, ProductsModule, RatingsModule],
 })
