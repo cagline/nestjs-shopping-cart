@@ -4,13 +4,15 @@ import { UserStatus } from "../user.enum";
 export class CreateUserDto {
 	@IsNotEmpty()
 	firstName: string
+
 	@IsNotEmpty()
 	lastName: string
+
 	@IsNotEmpty()
 	username: string;
+
 	@IsNotEmpty()
 	password: string;
-	@IsNotEmpty()
-	salt: string;
-	status:UserStatus
+	
+	status: UserStatus
 }
